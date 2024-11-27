@@ -1,5 +1,4 @@
 import TaskItem from "./TaskItem";
-import { v4 as uuidv4 } from "uuid";
 
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 
@@ -14,56 +13,11 @@ import {
 } from "@ant-design/icons";
 import { FloatButton } from "antd";
 
-export default function CreateElement({tasks, setTasks, originalTasks, setOriginalTasks, filteredTasks, setFilteredTasks, isHidden, setIsHidden}) {
+export default function CreateElement({tasks, setTasks, originalTasks, setOriginalTasks, filteredTasks, setFilteredTasks, isHidden, setIsHidden, handleDelete}) {
 
     const navigate = useNavigate()
     console.log(tasks);
-    
-
-    // Aqui iban las constantes de los estados
-    
-
-    function handleCreateTask(event) {
-        event.preventDefault();
-        const form = event.target;
-        const input = form.elements["itemName"];
-        if (input.value === "") return;
-
-        // Propiedades de la carta
-        const newTask = {
-            name: input.value,
-            status: "Pending",
-            description: "",
-            isChecked: false,
-            id: uuidv4(),
-            date: new Date().toISOString(),
-        };
-
-        const newList = [...tasks, newTask];
-        setTasks(newList);
-        setOriginalTasks(newList); // Actualizar lista original
-        setFilteredTasks(newList); // Asegurarse de que coincida con el estado inicial
-
-        input.value = "";
-        input.focus();
-    }
-
-    async function handleDelete(index) {
-        await window.api.openConfirmationDialog( 
-            tasks[index].name,  // Aquí accedes a la propiedad 'name' usando el índice correcto
-            'Are you sure you want to delete this item?'
-        )
-        .then((confirmed) => {
-            if (confirmed) {
-                // Eliminar la tarea del estado original y filtrado
-                const newList = tasks.filter((_value, i) => i !== index);
-                setTasks(newList);
-                setOriginalTasks(newList);  // Asegurarse de que la lista original también se actualice
-                setFilteredTasks(newList);  // Asegurarse de que el filtro también se actualice
-            }
-        });
-    }
-    
+        
     
     function handleCheckboxChange(index) {
         const updatedTasks = tasks.map((task, i) =>

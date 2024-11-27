@@ -4,6 +4,7 @@ import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
 import { dialog } from 'electron'
 import { title } from 'process'
+import { message } from 'antd'
 
 function createWindow() {
   // Create the browser window.
@@ -76,6 +77,26 @@ ipcMain.handle('openConfirmationDialog', async (event, title, message) => {
     });
 
     return result.response === 0;
+})
+
+ipcMain.handle('openEditConfirmationDialog', async(event, message) => {
+
+  const window = BrowserWindow.getFocusedWindow();
+  const result = await dialog.showMessageBox(window, {
+
+    type: 'question',
+    message: message,
+    buttons: ['Save', 'Discard', 'Cancel'],
+    saveId: 0,
+    discardId: 1,
+    cancelId: 2
+
+  });
+
+  return result
+
+
+
 })
 
 

@@ -1,9 +1,9 @@
 import { useNavigate } from "react-router-dom";
-import { v4 as uuidv4 } from "uuid";
 import { useState } from "react";
 
 // Usare tambien aqui filtered tasks para porque es la que uso en CreateElement porque sino buscara en una lista vacia
-export default function CreateView({ tasks, setTasks, setFilteredTasks }) {
+var id = 0
+export default function CreateView({ tasks, setTasks, setFilteredTasks, setId }) {
     const navigate = useNavigate();
 
     const [formValues, setFormValues] = useState({
@@ -34,13 +34,14 @@ export default function CreateView({ tasks, setTasks, setFilteredTasks }) {
             deadline = newDeadline.toISOString().split("T")[0]; // Fecha en formato YYYY-MM-DD
         }
 
+        ++id
         const newTask = {
             name: formValues.title,
             description: formValues.description,
             status: formValues.status,
             deadline,
             isChecked: false,
-            id: uuidv4(),
+            id: id,
             date: new Date().toISOString(),
         };
 
@@ -48,7 +49,7 @@ export default function CreateView({ tasks, setTasks, setFilteredTasks }) {
         const newList = [...tasks, newTask];
         setTasks(newList);
         setFilteredTasks(newList)
-
+        setId(id)
 
         // Navegar de vuelta a la vista principal
         navigate("/");
@@ -58,7 +59,7 @@ export default function CreateView({ tasks, setTasks, setFilteredTasks }) {
         const { title } = formValues;
 
         window.api
-            .openDiscardDialog(
+            .openConfirmationDialog(
                 title,
                 "Are you sure you want to discard this item?"
             )
