@@ -42,7 +42,7 @@ export default function CreateView({ tasks, setTasks, setFilteredTasks, setId })
             deadline,
             isChecked: false,
             id: id,
-            date: new Date().toISOString(),
+            date: new Date().toISOString()
         };
 
         // Actualizar el estado de las tareas

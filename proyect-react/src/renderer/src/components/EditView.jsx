@@ -2,15 +2,15 @@ import { useNavigate, useParams } from "react-router-dom"
 // El use params me servira para coger el id que enviamos desde el CreateView
 
 
-export default function EditView({tasks, setTasks, handleDeleteEdit, id}) { // Si no va mirar lo de filteredTasks
+export default function EditView({ tasks, setTasks, handleDeleteEdit, id }) { // Si no va mirar lo de filteredTasks
 
     const navigate = useNavigate()
-    const {itemId} = useParams() 
+    const { itemId } = useParams()
     const itemIdToNumeric = Number(itemId) + id // Mas uno para que se empareje con el id del objeto task ya que itemId empieza por 0
 
     // Para un futuro cojer el objecto buscandolo en el array para poner en el titulo el nombre en vez del numero
     function getTask() {
-        
+
         const task = tasks.find(task => task.id === itemIdToNumeric)
         console.log(task)
         return task
@@ -18,11 +18,39 @@ export default function EditView({tasks, setTasks, handleDeleteEdit, id}) { // S
     }
 
     function handleSave() {
-        
+
+        const newTitle = document.getElementById("iptTitle").value
+        const newDescription = document.getElementById("iptDescription").value
+        const newStatus = document.getElementById("iptStatus").value
+        const newDeadline = document.getElementById("iptDeadline").value
+
+
+        const taskListUpdated = tasks.map((ele) => {
+
+            if (ele.id == itemIdToNumeric) {
+                return {
+                    name: newTitle,
+                    description: newDescription,
+                    status: newStatus,
+                    deadline: newDeadline,
+                    isChecked: false,
+                    id: itemIdToNumeric,
+                    date: new Date().toISOString()
+                }
+            }
+
+        })
+
+        console.log(taskListUpdated)
+
+        setTasks(taskListUpdated)
+
+        navigate("/") // Quitar mas adelante por si el usuario quiere volver a cambiar en la esta misma vista
+
     }
 
     async function handleDeleteAndExit() {
-        
+
         const taskToDelete = getTask()
 
         await handleDeleteEdit(taskToDelete.id)
@@ -31,34 +59,33 @@ export default function EditView({tasks, setTasks, handleDeleteEdit, id}) { // S
     }
 
     function handleBack() {
-        
-        // De momento no funciona
+
         window.api.openEditConfirmationDialog(
 
             `Task ${itemId} have an unsaved changes. Do you want come back to the home page?`
         ).then((value) => {
-         
-
-                if (value.response === 0){
-
-                    // Le ha dado a si. Logica para guardar cambios
 
 
-                }else if (value.response === 1){
+            if (value.response === 0) {
 
-                    // Se descarta la edicion
-                    navigate("/")
-                    
+                // Le ha dado a si. Logica para guardar cambios
 
-                }else{
 
-                    return // No hacesmos nada. Si no funciona, Quitamos este else
+            } else if (value.response === 1) {
 
-                }
+                // Se descarta la edicion
+                navigate("/")
 
-            })
 
-        
+            } else {
+
+                return // No hacesmos nada. Si no funciona, Quitamos este else
+
+            }
+
+        })
+
+
 
     }
 
@@ -90,6 +117,7 @@ export default function EditView({tasks, setTasks, handleDeleteEdit, id}) { // S
                             ></textarea>
                         </div>
 
+                        {/* Creo que tengo que quitar lo de value en el option */}
                         <select
                             name="status"
                             id="iptStatus"
@@ -110,11 +138,11 @@ export default function EditView({tasks, setTasks, handleDeleteEdit, id}) { // S
                         <label>Deadline</label>
                     </div>
 
-                   
+
                 </form>
             </div>
 
-        
+
 
             <button type="button" onClick={handleDeleteAndExit}>Delete</button>
             <button type="button" onClick={handleSave}>Save</button>
