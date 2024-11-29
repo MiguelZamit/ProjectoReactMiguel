@@ -1,16 +1,24 @@
 import { contextBridge } from 'electron'
 import { electronAPI } from '@electron-toolkit/preload'
 import { ipcRenderer } from 'electron'
-import { message } from 'antd'
+
 
 // Custom APIs for renderer
 const api = {
-  openConfirmationDialog: (title, message) =>
-    ipcRenderer.invoke('openConfirmationDialog', title, message),
+  openConfirmationDialog: (title, message) => ipcRenderer.invoke('openConfirmationDialog', title, message),
 
-  openEditConfirmationDialog: (message) =>
-    ipcRenderer.invoke('openEditConfirmationDialog', message)
-  
+  openEditConfirmationDialog: (message) => ipcRenderer.invoke('openEditConfirmationDialog', message),
+
+  addTask: (item) => ipcRenderer.send('addTask', item), 
+
+  getTasks: () => ipcRenderer.invoke('getTasks'),
+
+  deleteTask: (item) => ipcRenderer.invoke('deleteTask', item),
+
+  updateTask: (item) => ipcRenderer.send('updateTask', item),
+
+  getTask: (item) => ipcRenderer.invoke('getTask', item)
+
 }
 
 

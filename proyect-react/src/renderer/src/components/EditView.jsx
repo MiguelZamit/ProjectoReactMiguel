@@ -140,13 +140,10 @@ export default function EditView({ tasks, setTasks, handleDeleteEdit, id }) { //
 
 
                 </form>
+                <button type="button" onClick={handleDeleteAndExit}>Delete</button>
+                <button type="button" onClick={handleSave}>Save</button>
+                <button type="button" onClick={handleBack}>Back</button>
             </div>
-
-
-
-            <button type="button" onClick={handleDeleteAndExit}>Delete</button>
-            <button type="button" onClick={handleSave}>Save</button>
-            <button type="button" onClick={handleBack}>Back</button>
 
             {/* <button onClick={() => navigate('/')} type="button" >Return</button> */}
         </>

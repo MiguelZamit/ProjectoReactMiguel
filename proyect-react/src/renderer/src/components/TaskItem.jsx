@@ -9,10 +9,20 @@ export default function TaskItem({ task, index, handleCheckboxChange, handleDele
 
     const navigate = useNavigate()
 
+
+    function deleteItem(index) {
+        
+        handleDelete(index)
+
+        window.api.deleteTask(task) // Aqui lo elimino de la base de datos
+
+    }
+
+
     const actions = [
         <EditOutlined key="edit" onClick={() => navigate(`/editView/${index}`)}/>,
         <InfoCircleOutlined key="info" />,
-        <DeleteOutlined key="delete" onClick={() => handleDelete(index)}/>
+        <DeleteOutlined key="delete" onClick={() => deleteItem(index)}/>
     ];
 
     return (

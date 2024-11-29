@@ -1,6 +1,8 @@
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
+import "../assets/style.css"
+
 // Usare tambien aqui filtered tasks para porque es la que uso en CreateElement porque sino buscara en una lista vacia
 var id = 0
 export default function CreateView({ tasks, setTasks, setFilteredTasks, setId }) {
@@ -45,11 +47,17 @@ export default function CreateView({ tasks, setTasks, setFilteredTasks, setId })
             date: new Date().toISOString()
         };
 
+
+
         // Actualizar el estado de las tareas
         const newList = [...tasks, newTask];
         setTasks(newList);
         setFilteredTasks(newList)
         setId(id)
+
+
+        // AQUI LLAMO PARA AÑADIR ELEMENTO A LA BASE DE DATOS
+        window.api.addTask(newTask)
 
         // Navegar de vuelta a la vista principal
         navigate("/");

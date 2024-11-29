@@ -23,6 +23,7 @@
     "@electron-toolkit/utils": "^3.0.0",
     "antd": "^5.22.2",
     "bootstrap": "^5.3.3",
+    "electron-store": "^8.2.0",
     "react-router-dom": "^7.0.1",
     "saas": "^1.0.0",
     "uuid": "^11.0.3"

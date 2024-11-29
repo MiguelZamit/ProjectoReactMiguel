@@ -79,85 +79,86 @@ export default function CreateElement({ tasks, setTasks, originalTasks, setOrigi
         setIsHidden(!isHidden);
     }
 
+
     return (
         <>
             <div className="background">
 
                 <h1>Task List</h1>
-                <div className="dropdown">
-                    <button
-                        className="btn btn-secondary dropdown-toggle"
-                        type="button"
-                        data-bs-toggle="dropdown"
-                        aria-expanded="false"
-                    >
-                        Sort list by:
-                    </button>
-                    <small style={{ color: "grey", fontFamily: "monospace", marginLeft: "4px" }}>
-                        Remove the text from the filter to recover the cards info
-                    </small>
-                    <ul className="dropdown-menu dropdown-menu-dark">
-                        <li>
-                            <div className="input-group mb-3">
-                                <input
-                                    type="text"
-                                    className="form-control"
-                                    placeholder="Example: 'Make Exercise'"
-                                    id="iptTitle"
-                                />
-                                <button
-                                    className="btn btn-outline-secondary"
-                                    type="button"
-                                    onClick={handleFilterByTitle}
-                                >
-                                    Search
-                                </button>
-                                <small style={{ color: "grey", fontFamily: "monospace", margin: "7px" }}>
-                                    Sort by Title
-                                </small>
-                            </div>
-                        </li>
-                        <li>
-                            <div className="input-group mb-3">
-                                <input
-                                    type="text"
-                                    className="form-control"
-                                    id="iptStatus"
-                                    placeholder="Example: 'In Progress'"
-                                />
-                                <button
-                                    className="btn btn-outline-secondary"
-                                    type="button"
-                                    onClick={handleFilterByStatus}
-                                >
-                                    Search
-                                </button>
-                                <small style={{ color: "grey", fontFamily: "monospace", margin: "7px" }}>
-                                    Sort by Status
-                                </small>
-                            </div>
-                        </li>
-                        <li>
-                            <div className="input-group mb-3">
-                                <input
-                                    type="date"
-                                    className="form-control"
-                                    id="iptDate"
-                                />
-                                <button
-                                    className="btn btn-outline-secondary"
-                                    type="button"
-                                    onClick={handleSortByDate}
-                                >
-                                    Search
-                                </button>
-                                <small style={{ color: "grey", fontFamily: "monospace", margin: "7px" }}>
-                                    Sort by Date
-                                </small>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
+
+                <button
+                    className="btn btn-secondary dropdown-toggle"
+                    type="button"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                >
+                    Sort list by:
+                </button>
+                <small style={{ color: "grey", fontFamily: "monospace", marginLeft: "4px" }}>
+                    Remove the text from the filter to recover the cards info
+                </small>
+                <ul className="dropdown-menu dropdown-menu-dark">
+                    <li>
+                        <div className="input-group mb-3">
+                            <input
+                                type="text"
+                                className="form-control"
+                                placeholder="Example: 'Make Exercise'"
+                                id="iptTitle"
+                            />
+                            <button
+                                className="btn btn-outline-secondary"
+                                type="button"
+                                onClick={handleFilterByTitle}
+                            >
+                                Search
+                            </button>
+                            <small style={{ color: "grey", fontFamily: "monospace", margin: "7px" }}>
+                                Sort by Title
+                            </small>
+                        </div>
+                    </li>
+                    <li>
+                        <div className="input-group mb-3">
+                            <input
+                                type="text"
+                                className="form-control"
+                                id="iptStatus"
+                                placeholder="Example: 'In Progress'"
+                            />
+                            <button
+                                className="btn btn-outline-secondary"
+                                type="button"
+                                onClick={handleFilterByStatus}
+                            >
+                                Search
+                            </button>
+                            <small style={{ color: "grey", fontFamily: "monospace", margin: "7px" }}>
+                                Sort by Status
+                            </small>
+                        </div>
+                    </li>
+                    <li>
+                        <div className="input-group mb-3">
+                            <input
+                                type="date"
+                                className="form-control"
+                                id="iptDate"
+                            />
+                            <button
+                                className="btn btn-outline-secondary"
+                                type="button"
+                                onClick={handleSortByDate}
+                            >
+                                Search
+                            </button>
+                            <small style={{ color: "grey", fontFamily: "monospace", margin: "7px" }}>
+                                Sort by Date
+                            </small>
+                        </div>
+                    </li>
+                </ul>
+
 
                 <div className="row gap-3">
                     <form className="input-group mb-3" > {/* onSubmit={handleCreateTask} */}

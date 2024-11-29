@@ -3,12 +3,16 @@ import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
 import { dialog } from 'electron'
-import { title } from 'process'
-import { message } from 'antd'
+import  TaskManager  from './TaskManager.js'
 
+
+const store = new TaskManager({ name: 'main' })
+
+
+var mainWindow
 function createWindow() {
   // Create the browser window.
-  const mainWindow = new BrowserWindow({
+   mainWindow = new BrowserWindow({
     width: 900,
     height: 670,
     show: false,
@@ -19,7 +23,7 @@ function createWindow() {
       sandbox: false
     }
   })
-  
+
 
   mainWindow.on('ready-to-show', () => {
     mainWindow.show()
@@ -66,21 +70,54 @@ app.whenReady().then(() => {
 })
 
 
-ipcMain.handle('openConfirmationDialog', async (event, title, message) => {
-    const window = BrowserWindow.getFocusedWindow();
-    const result = await dialog.showMessageBox(window, {
-      type: 'warning',
-      title: title,
-      message: message,
-      buttons: ['Yes','Cancel'],
-      cancelId: 1,
-      defaultId: 0
-    });
+// AÑADIR TEAREA
+ipcMain.on('addTask', (event, item) => {
 
-    return result.response === 0;
+  store.addItem(item);
+
 })
 
-ipcMain.handle('openEditConfirmationDialog', async(event, message) => {
+// IMPORTANTE: LA FUNCION DE DELETE TASK DE TASKMANAGER LO TENGO QUE HACER ALLI
+
+// ESTA ES PARA OBTENER TODA LA LISTA
+ipcMain.handle('getTasks', async () => {
+  try {
+    const list = await store.getList(); // Aquí esperamos que la promesa se resuelva
+    return list; // Devolvemos la lista al renderer
+  } catch (error) {
+    console.error(error);
+    return []; // Retornamos un array vacío en caso de error
+  }
+});
+
+
+
+// GET ITEM (ID)
+ipcMain.handle('getTask', async (event, itemId) => {
+  return await store.getItem(itemId)
+})
+
+
+// UPDATE ITEM
+ipcMain.on('updateTask', (event, item) => {
+  mainWindow.send('list-updated', store.updateItem(item))
+})
+
+ipcMain.handle('openConfirmationDialog', async (event, title, message) => {
+  const window = BrowserWindow.getFocusedWindow();
+  const result = await dialog.showMessageBox(window, {
+    type: 'warning',
+    title: title,
+    message: message,
+    buttons: ['Yes', 'Cancel'],
+    cancelId: 1,
+    defaultId: 0
+  });
+
+  return result.response === 0;
+})
+
+ipcMain.handle('openEditConfirmationDialog', async (event, message) => {
 
   const window = BrowserWindow.getFocusedWindow();
   const result = await dialog.showMessageBox(window, {
@@ -97,6 +134,12 @@ ipcMain.handle('openEditConfirmationDialog', async(event, message) => {
   return result
 
 
+
+})
+
+ipcMain.handle('deleteTask', async(event, item) =>{
+
+  store.deleteItem(item)
 
 })
 
