@@ -100,7 +100,7 @@ ipcMain.handle('getTask', async (event, itemId) => {
 
 // UPDATE ITEM
 ipcMain.on('updateTask', (event, item) => {
-  mainWindow.send('list-updated', store.updateItem(item))
+  store.updateItem(item) // Cambiado del original
 })
 
 ipcMain.handle('openConfirmationDialog', async (event, title, message) => {

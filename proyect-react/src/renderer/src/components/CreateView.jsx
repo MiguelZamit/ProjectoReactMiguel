@@ -4,8 +4,20 @@ import { useState } from "react";
 import "../assets/style.css"
 
 // Usare tambien aqui filtered tasks para porque es la que uso en CreateElement porque sino buscara en una lista vacia
-var id = 0
-export default function CreateView({ tasks, setTasks, setFilteredTasks, setId }) {
+
+export default function CreateView({ tasks, setTasks, setFilteredTasks, setIds, ids }) {
+
+
+    function getLastId() {
+        if (ids.length === 0) {
+            return 0; // Si no hay tareas, el primer ID será 0
+        }
+        // Encuentra el ID más alto en las tareas
+        return Math.max(...tasks.map(task => task.id));
+    }
+    
+    
+
     const navigate = useNavigate();
 
     const [formValues, setFormValues] = useState({
@@ -26,16 +38,16 @@ export default function CreateView({ tasks, setTasks, setFilteredTasks, setId })
 
     function handleCreateTask(event) {
         event.preventDefault();
-
+    
         let { deadline } = formValues;
-
-        // Si no se establece una fecha límite, definirla como 7 días después de hoy
+    
         if (!deadline) {
             const newDeadline = new Date();
             newDeadline.setDate(newDeadline.getDate() + 7);
-            deadline = newDeadline.toISOString().split("T")[0]; // Fecha en formato YYYY-MM-DD
+            deadline = newDeadline.toISOString().split("T")[0];
         }
-
+    
+        var id = getLastId()
         ++id
         const newTask = {
             name: formValues.title,
@@ -43,25 +55,21 @@ export default function CreateView({ tasks, setTasks, setFilteredTasks, setId })
             status: formValues.status,
             deadline,
             isChecked: false,
-            id: id,
-            date: new Date().toISOString()
+            id: id, // Asigna el nuevo ID
+            date: new Date().toISOString(),
         };
-
-
-
-        // Actualizar el estado de las tareas
+        
+    
         const newList = [...tasks, newTask];
         setTasks(newList);
-        setFilteredTasks(newList)
-        setId(id)
-
-
-        // AQUI LLAMO PARA AÑADIR ELEMENTO A LA BASE DE DATOS
-        window.api.addTask(newTask)
-
-        // Navegar de vuelta a la vista principal
+        setFilteredTasks(newList);
+        setIds(ids);
+    
+        window.api.addTask(newTask);
+    
         navigate("/");
     }
+    
 
     async function handleDiscard() {
         const { title } = formValues;

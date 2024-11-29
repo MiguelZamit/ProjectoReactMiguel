@@ -179,7 +179,7 @@ export default function CreateElement({ tasks, setTasks, originalTasks, setOrigi
                                             <TaskItem
                                                 key={task.id}
                                                 task={task}
-                                                index={index}
+                                                index={index + 1}
                                                 handleDelete={handleDelete}
                                                 handleCheckboxChange={handleCheckboxChange}
                                             />
@@ -195,7 +195,7 @@ export default function CreateElement({ tasks, setTasks, originalTasks, setOrigi
                                             <TaskItem
                                                 key={task.id}
                                                 task={task}
-                                                index={index}
+                                                index={index + 1}
                                                 handleDelete={handleDelete}
                                                 handleCheckboxChange={handleCheckboxChange}
                                             />
@@ -212,7 +212,7 @@ export default function CreateElement({ tasks, setTasks, originalTasks, setOrigi
                                                 <TaskItem
                                                     key={task.id}
                                                     task={task}
-                                                    index={index}
+                                                    index={index + 1} // En vez de hacerlo desde 0 lo hago desde 1
                                                     handleDelete={handleDelete}
                                                     handleCheckboxChange={handleCheckboxChange}
                                                 />
@@ -230,7 +230,7 @@ export default function CreateElement({ tasks, setTasks, originalTasks, setOrigi
                                                 <TaskItem
                                                     key={task.id}
                                                     task={task}
-                                                    index={index}
+                                                    index={index + 1}
                                                     handleDelete={handleDelete}
                                                     handleCheckboxChange={handleCheckboxChange}
                                                 />

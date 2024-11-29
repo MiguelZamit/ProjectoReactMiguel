@@ -17,7 +17,7 @@ const api = {
 
   updateTask: (item) => ipcRenderer.send('updateTask', item),
 
-  getTask: (item) => ipcRenderer.invoke('getTask', item)
+  getTask: (itemId) => ipcRenderer.invoke('getTask', itemId)
 
 }
 
