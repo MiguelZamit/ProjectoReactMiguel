@@ -49,10 +49,6 @@ export default function App() {
     
 
 
-
-
-
-
     // Función para eliminar tareas desde la vista de edición
     async function handleDeleteEdit(taskId) {
         const taskToDelete = tasks.find(task => task.id === taskId);

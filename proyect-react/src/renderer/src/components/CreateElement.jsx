@@ -20,11 +20,16 @@ export default function CreateElement({ tasks, setTasks, originalTasks, setOrigi
 
 
     function handleCheckboxChange(index) {
+        --index
         const updatedTasks = tasks.map((task, i) =>
             i === index ? { ...task, isChecked: !task.isChecked } : task
         );
         setTasks(updatedTasks);
         setOriginalTasks(updatedTasks); // Actualizar lista original
+        setFilteredTasks(updatedTasks)
+
+
+        window.api.saveList()
     }
 
     function moveSelectedTasks(newStatus) {

@@ -91,7 +91,6 @@ ipcMain.handle('getTasks', async () => {
 });
 
 
-
 // GET ITEM (ID)
 ipcMain.handle('getTask', async (event, itemId) => {
   return await store.getItem(itemId)
@@ -116,6 +115,8 @@ ipcMain.handle('openConfirmationDialog', async (event, title, message) => {
 
   return result.response === 0;
 })
+
+ipcMain
 
 ipcMain.handle('openEditConfirmationDialog', async (event, message) => {
 
@@ -143,6 +144,12 @@ ipcMain.handle('deleteTask', async(event, item) =>{
 
 })
 
+
+ipcMain.handle('saveList', () => {
+
+  store.saveList()
+
+})
 
 
 // Quit when all windows are closed, except on macOS. There, it's common

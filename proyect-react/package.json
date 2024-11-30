@@ -22,6 +22,7 @@
     "@electron-toolkit/preload": "^3.0.1",
     "@electron-toolkit/utils": "^3.0.0",
     "antd": "^5.22.2",
+    "antd-style": "^3.7.1",
     "bootstrap": "^5.3.3",
     "electron-store": "^8.2.0",
     "react-router-dom": "^7.0.1",

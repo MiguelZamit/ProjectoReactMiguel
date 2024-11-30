@@ -9,7 +9,7 @@ export default function CreateView({ tasks, setTasks, setFilteredTasks, setIds, 
 
 
     function getLastId() {
-        if (ids.length === 0) {
+        if (tasks.length === 0) {
             return 0; // Si no hay tareas, el primer ID será 0
         }
         // Encuentra el ID más alto en las tareas
