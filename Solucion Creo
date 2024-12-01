@@ -1,0 +1,1 @@
+Para arreglar lo del cambio entre estados tras cerrar hay que salvar lista en el boton del float button que es el que esta en createElement
