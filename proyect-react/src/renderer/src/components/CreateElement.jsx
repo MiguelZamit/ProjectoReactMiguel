@@ -16,7 +16,7 @@ import { FloatButton } from "antd";
 export default function CreateElement({ tasks, setTasks, originalTasks, setOriginalTasks, filteredTasks, setFilteredTasks, isHidden, setIsHidden, handleDelete }) {
 
     const navigate = useNavigate()
-    console.log(tasks); // No se porque pero el actulizar funciona pero me sale undefined en consola
+    console.log(tasks);
 
 
     function handleCheckboxChange(index) {
@@ -29,7 +29,6 @@ export default function CreateElement({ tasks, setTasks, originalTasks, setOrigi
         setFilteredTasks(updatedTasks)
 
 
-        window.api.saveList()
     }
 
     function moveSelectedTasks(newStatus) {
@@ -39,6 +38,13 @@ export default function CreateElement({ tasks, setTasks, originalTasks, setOrigi
         setTasks(updatedTasks);
         setOriginalTasks(updatedTasks); // Asegurar consistencia
         setFilteredTasks(updatedTasks); // Asegurar consistencia con el filtro activo
+
+        updatedTasks.forEach(task => {
+
+            window.api.updateTask(task)
+
+        });
+
     }
 
     function handleFilterByTitle() {
@@ -175,63 +181,13 @@ export default function CreateElement({ tasks, setTasks, originalTasks, setOrigi
 
                     <div className="container text-center">
                         <div className="row align-items-start">
-                            <div className="col">
+                            <div className="col" >
                                 Pending
                                 <ul className="list-group">
                                     {filteredTasks // Cmabiado esto
                                         .filter((task) => task.status === "Pending")
                                         .map((task, index) => (
-                                            <TaskItem
-                                                key={task.id}
-                                                task={task}
-                                                index={index + 1}
-                                                handleDelete={handleDelete}
-                                                handleCheckboxChange={handleCheckboxChange}
-                                            />
-                                        ))}
-                                </ul>
-                            </div>
-                            <div className="col">
-                                In Progress
-                                <ul className="list-group">
-                                    {filteredTasks
-                                        .filter((task) => task.status === "In Progress")
-                                        .map((task, index) => (
-                                            <TaskItem
-                                                key={task.id}
-                                                task={task}
-                                                index={index + 1}
-                                                handleDelete={handleDelete}
-                                                handleCheckboxChange={handleCheckboxChange}
-                                            />
-                                        ))}
-                                </ul>
-                            </div>
-                            <div className="col">
-                                Completed
-                                {!isHidden && (
-                                    <ul className="list-group">
-                                        {filteredTasks
-                                            .filter((task) => task.status === "Completed")
-                                            .map((task, index) => (
-                                                <TaskItem
-                                                    key={task.id}
-                                                    task={task}
-                                                    index={index + 1} // En vez de hacerlo desde 0 lo hago desde 1
-                                                    handleDelete={handleDelete}
-                                                    handleCheckboxChange={handleCheckboxChange}
-                                                />
-                                            ))}
-                                    </ul>
-                                )}
-                            </div>
-                            <div className="col">
-                                Canceled
-                                {!isHidden && (
-                                    <ul className="list-group">
-                                        {filteredTasks
-                                            .filter((task) => task.status === "Canceled")
-                                            .map((task, index) => (
+                                            <div className="d-flex justify-content-center align-content-center">
                                                 <TaskItem
                                                     key={task.id}
                                                     task={task}
@@ -239,6 +195,75 @@ export default function CreateElement({ tasks, setTasks, originalTasks, setOrigi
                                                     handleDelete={handleDelete}
                                                     handleCheckboxChange={handleCheckboxChange}
                                                 />
+
+                                            </div>
+
+                                        ))}
+                                </ul>
+                            </div>
+                            <div className="col" >
+                                In Progress
+                                <ul className="list-group">
+                                    {filteredTasks
+                                        .filter((task) => task.status === "In Progress")
+                                        .map((task, index) => (
+
+                                            <div className="d-flex justify-content-center align-content-center">
+
+                                                <TaskItem
+                                                    key={task.id}
+                                                    task={task}
+                                                    index={index + 1}
+                                                    handleDelete={handleDelete}
+                                                    handleCheckboxChange={handleCheckboxChange}
+                                                />
+                                            </div>
+
+                                        ))}
+                                </ul>
+                            </div>
+                            <div className="col" >
+
+                                Completed
+                                {!isHidden && (
+                                    <ul className="list-group">
+                                        {filteredTasks
+                                            .filter((task) => task.status === "Completed")
+                                            .map((task, index) => (
+                                                <div className="d-flex justify-content-center align-content-center">
+
+                                                    <TaskItem
+                                                        key={task.id}
+                                                        task={task}
+                                                        index={index + 1} // En vez de hacerlo desde 0 lo hago desde 1
+                                                        handleDelete={handleDelete}
+                                                        handleCheckboxChange={handleCheckboxChange}
+                                                    />
+
+                                                </div>
+
+                                            ))}
+                                    </ul>
+                                )}
+                            </div>
+                            <div className="col" >
+                                Canceled
+                                {!isHidden && (
+                                    <ul className="list-group">
+                                        {filteredTasks
+                                            .filter((task) => task.status === "Canceled")
+                                            .map((task, index) => (
+                                                <div className="d-flex justify-content-center align-content-center">
+
+                                                    <TaskItem
+                                                        key={task.id}
+                                                        task={task}
+                                                        index={index + 1}
+                                                        handleDelete={handleDelete}
+                                                        handleCheckboxChange={handleCheckboxChange}
+                                                    />
+                                                </div>
+
                                             ))}
                                     </ul>
                                 )}
